@@ -5,9 +5,7 @@ from .forms import ReviewForm,UpdateProfile
 from ..models import Review,User,PhotoProfile
 from flask_login import login_required,current_user
 from .. import db,photos
-
-
-
+import markdown2  
 
 
 
@@ -58,6 +56,24 @@ def search(movie_name):
     searched_movies = search_movie(movie_name_format)
     title = f'search results for {movie_name}'
     return render_template('search.html',movies = searched_movies)
+
+
+@main.route('/reviews/<int:id>')
+def movie_reviews(id):
+    movie = get_movie(id)
+
+    reviews = Review.get_reviews(id)
+    title = f'All reviews for {movie.title}'
+    return render_template('movie_reviews.html',title = title,reviews=reviews)
+
+
+@main.route('/review/<int:id>')
+def single_review(id):
+    review=Review.query.get(id)
+    format_review = markdown2.markdown(review.movie_review,extras=["code-friendly", "fenced-code-blocks"])
+    return render_template('review.html',review = review,format_review=format_review)
+
+
 
 
 @main.route('/movie/review/new/<int:id>', methods = ['GET','POST'])
