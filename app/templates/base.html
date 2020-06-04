@@ -1,20 +1,6 @@
-<!DOCTYPE html>
-<html>
+{% extends 'bootstrap/base.html'%} {%block styles %} {{super()}}
+<!--Importing the simple mde css and js files  -->
+{{ simplemde.css}} {{ simplemde.js }} {% endblock %}
 
-<head>
-    <meta charset="utf-8"> {% if title %}
-    <title> {{ title }}</title>
-    {% else %}
-    <title> Welcome to the best Movie Review website </title>
-    {% endif %}
-</head>
-
-<body>
-    <!-- Content block -->
-
-    {% extends 'bootstrap/base.html'%}
-    <!-- Navbar block  -->
-    {% block navbar %} {% include 'navbar.html' %} {% endblock %}
-</body>
-
-</html>
+<!-- Navbar block  -->
+{% block navbar %} {% include 'navbar.html' %} {% endblock %}
